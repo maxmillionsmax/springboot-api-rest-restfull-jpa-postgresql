@@ -10,6 +10,7 @@ import org.hibernate.annotations.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@SuppressWarnings("deprecation")
 @Entity
 public class Telefone {
 

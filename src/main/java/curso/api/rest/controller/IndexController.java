@@ -86,6 +86,7 @@ public class IndexController {
 
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping(value = "/{iduser}/idvenda/{idvenda}", produces = "application/json")
 	public ResponseEntity cadastrarvenda(@PathVariable Long iduser, @PathVariable Long idvenda) {
 
@@ -93,6 +94,7 @@ public class IndexController {
 
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PutMapping(value = "/{iduser}/idvenda/{idvenda}", produces = "application/json")
 	public ResponseEntity updateVenda(@PathVariable Long iduser, @PathVariable Long idvenda) {
 
@@ -100,6 +102,7 @@ public class IndexController {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	@PutMapping(value = "/", produces = "application/json")
 	public ResponseEntity atualizar(@RequestBody Usuario usuario) {
 
