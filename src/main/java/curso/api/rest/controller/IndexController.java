@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import curso.api.rest.model.Usuario;
 import curso.api.rest.repository.UsuarioRepository;
 
-@CrossOrigin(origins = "http://localhost:8080/usuario/")
+@CrossOrigin//libera requisições de qualquer lugar
 @RestController
 @RequestMapping(value = "/usuario")
 public class IndexController {
