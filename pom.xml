@@ -70,6 +70,7 @@
 			<artifactId>spring-security-config</artifactId>
 		</dependency>
 		
+		<!-- Gerar token jwt -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
