@@ -34,7 +34,7 @@ public class JWTTokenAutenticacaoService {
 	private static final String HEADER_STRING = "Authorization";
 	
 	/*Gerando token de autenticado e adiconando ao cabeçalho e resposta Http*/
-	public void addAuthentication(HttpServletResponse response , String username) throws Exception {
+	public void addAuthentication(HttpServletResponse response , String username) throws IOException {
 		
 		/*Montagem do Token*/
 		String JWT = Jwts.builder() /*Chama o gerador de Token*/
