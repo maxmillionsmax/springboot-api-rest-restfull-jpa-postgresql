@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,6 +34,7 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(unique = true)
 	private String login;
 
 	private String senha;
@@ -114,38 +116,38 @@ public class Usuario implements UserDetails {
 		return roles;
 	}
 
-	@JsonIgnore
 	@Override
+	@JsonIgnore
 	public String getPassword() {
 		return this.senha;
 	}
 
-	@JsonIgnore
 	@Override
+	@JsonIgnore
 	public String getUsername() {
 		return this.login;
 	}
 
-	@JsonIgnore
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
-	@JsonIgnore
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
-	@JsonIgnore
 	@Override
+	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
-	@JsonIgnore
 	@Override
+	@JsonIgnore
 	public boolean isEnabled() {
 		return true;
 	}
