@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,6 +38,16 @@ public class IndexController {
 		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
 
 	}
+	
+	@GetMapping(value = "/{id}", produces = "application/json")
+	@Cacheable("caheuser")
+	public ResponseEntity<Usuario> init(@PathVariable(value = "id") Long id) {
+		
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		
+		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
+		
+	}
 
 	@GetMapping(value = "/{id}", produces = "application/json", headers = "X-API-Version=v1")
 	public ResponseEntity<Usuario> initV1(@PathVariable(value = "id") Long id) {
@@ -46,19 +57,15 @@ public class IndexController {
 
 	}
 	
-	@GetMapping(value = "/{id}", produces = "application/json", headers = "X-API-Version=v2")
-	public ResponseEntity<Usuario> initV2(@PathVariable(value = "id") Long id) {
 
-		Optional<Usuario> usuario = usuarioRepository.findById(id);
-		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
-
-	}
-
+	
 	@GetMapping(value = "/", produces = "application/json")
-	public ResponseEntity<List<Usuario>> usuario() {
+	@Cacheable("cacheusuarios")
+	public ResponseEntity<List<Usuario>> usuario() throws InterruptedException {
 
 		List<Usuario> list = (List<Usuario>) usuarioRepository.findAll();
-
+		Thread.sleep(6000);/*simula lentidão*/
+		
 		return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
 
 	}
