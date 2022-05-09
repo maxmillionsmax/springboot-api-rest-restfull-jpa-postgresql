@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import curso.api.rest.model.Usuario;
 import curso.api.rest.repository.UsuarioRepository;
 
-@CrossOrigin//libera requisições de qualquer lugar
+@CrossOrigin // libera requisições de qualquer lugar
 @RestController
 @RequestMapping(value = "/usuario")
 public class IndexController {
@@ -80,7 +80,7 @@ public class IndexController {
 		for (int pos = 0; pos < usuario.getTelefones().size(); pos++) {
 			usuario.getTelefones().get(pos).setUsuario(usuario);
 		}
-		
+
 		String senhacriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
 		usuario.setSenha(senhacriptografada);
 		Usuario usuarioSalvo = usuarioRepository.save(usuario);
@@ -112,7 +112,14 @@ public class IndexController {
 		for (int pos = 0; pos < usuario.getTelefones().size(); pos++) {
 			usuario.getTelefones().get(pos).setUsuario(usuario);
 		}
-		
+
+		Usuario userTemporario = usuarioRepository.findUserByLogin(usuario.getLogin());
+
+		if (!userTemporario.getSenha().equals(usuario.getSenha())) { /* Senhas diferentes */
+			String senhacriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+			usuario.setSenha(senhacriptografada);
+		}
+
 		Usuario usuarioSalvo = usuarioRepository.save(usuario);
 
 		return new ResponseEntity<Usuario>(usuarioSalvo, HttpStatus.OK);
