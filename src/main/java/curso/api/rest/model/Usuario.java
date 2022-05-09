@@ -13,13 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -106,40 +107,47 @@ public class Usuario implements UserDetails {
 		Usuario other = (Usuario) obj;
 		return Objects.equals(id, other.id);
 	}
+	/*São os acessos do usuário ROLE_ADMIN OU ROLE_VISITANTE*/
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
-		return null;
+
+		return roles;
 	}
+
+	@JsonIgnore
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.senha;
 	}
+
+	@JsonIgnore
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.login;
 	}
+
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@JsonIgnore
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@JsonIgnore
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
-	
+
 }
