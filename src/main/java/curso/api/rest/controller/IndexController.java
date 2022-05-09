@@ -38,11 +38,20 @@ public class IndexController {
 
 	}
 
-	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<Usuario> init(@PathVariable(value = "id") Long id) {
+	@GetMapping(value = "/{id}", produces = "application/json", headers = "X-API-Version=v1")
+	public ResponseEntity<Usuario> initV1(@PathVariable(value = "id") Long id) {
 
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		System.out.println("Executando versão 1");
+		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
 
+	}
+	
+	@GetMapping(value = "/{id}", produces = "application/json", headers = "X-API-Version=v2")
+	public ResponseEntity<Usuario> initV2(@PathVariable(value = "id") Long id) {
+
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		System.out.println("Executando versão 2");
 		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
 
 	}
