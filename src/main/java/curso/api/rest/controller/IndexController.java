@@ -42,7 +42,6 @@ public class IndexController {
 	public ResponseEntity<Usuario> initV1(@PathVariable(value = "id") Long id) {
 
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
-		System.out.println("Executando versão 1");
 		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
 
 	}
@@ -51,7 +50,6 @@ public class IndexController {
 	public ResponseEntity<Usuario> initV2(@PathVariable(value = "id") Long id) {
 
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
-		System.out.println("Executando versão 2");
 		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
 
 	}
