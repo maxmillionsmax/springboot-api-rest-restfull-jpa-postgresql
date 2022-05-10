@@ -85,11 +85,9 @@ public class JWTTokenAutenticacaoService {
 				}
 			}/*token*/			
 		} catch (io.jsonwebtoken.ExpiredJwtException e) {
-			e.printStackTrace();
 			try {
 				response.getOutputStream().println("Seu Token expirou, faça o login ou informe um novo token para autenticação");
 			} catch (IOException e1) {
-				e.printStackTrace();
 			}
 		}
 
