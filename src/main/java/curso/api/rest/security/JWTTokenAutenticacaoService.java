@@ -61,25 +61,35 @@ public class JWTTokenAutenticacaoService {
 
 		/* Pega o token enviado no cabeçalho http */
 		String token = request.getHeader(HEADER_STRING);
-		if (token != null) {
-
-			String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim();
-			/* Faz a validação do token do usuário na requisição */
-			String user = Jwts.parser().setSigningKey(SECRET) /* Bearer 87878we8we787w8e78w78e78w7e87w */
-					.parseClaimsJws(tokenLimpo) /* 87878we8we787w8e78w78e78w7e87w */
-					.getBody().getSubject(); /* Joy Saliva */
-			if (user != null) {
-
-				Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class)
-						.findUserByLogin(user);
-				if (usuario != null) {
-
-					if (tokenLimpo.equalsIgnoreCase(usuario.getToken())) {
-
-						return new UsernamePasswordAuthenticationToken(usuario.getLogin(), usuario.getSenha(),
-								usuario.getAuthorities());
+		
+		try {
+			if (token != null) {/*token*/
+				
+				String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim();
+				/* Faz a validação do token do usuário na requisição */
+				String user = Jwts.parser().setSigningKey(SECRET) /* Bearer 87878we8we787w8e78w78e78w7e87w */
+						.parseClaimsJws(tokenLimpo) /* 87878we8we787w8e78w78e78w7e87w */
+						.getBody().getSubject(); /* Joy Saliva */
+				if (user != null) {
+					
+					Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class)
+							.findUserByLogin(user);
+					if (usuario != null) {
+						
+						if (tokenLimpo.equalsIgnoreCase(usuario.getToken())) {
+							
+							return new UsernamePasswordAuthenticationToken(usuario.getLogin(), usuario.getSenha(),
+									usuario.getAuthorities());
+						}
 					}
 				}
+			}/*token*/			
+		} catch (io.jsonwebtoken.ExpiredJwtException e) {
+			e.printStackTrace();
+			try {
+				response.getOutputStream().println("Seu Token expirou, faça o login ou informe um novo token para autenticação");
+			} catch (IOException e1) {
+				e.printStackTrace();
 			}
 		}
 
